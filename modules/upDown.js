@@ -1,4 +1,3 @@
-const PeopleRadio = document.querySelectorAll(`.sideBar div[class$='Radio']`);
 const upSide = document.querySelector('.leftSide');
 const downSide = document.querySelector('.rightSide');
 const People = {
@@ -12,9 +11,17 @@ const People = {
     'Robber':upSide.children[8]
 }
 const river = document.querySelector('.river');
+class PeopleRadioClass {
+    constructor(radios){
+        this.radios = radios
+    }
+}
+const upDownControllerList = new PeopleRadioClass(document.querySelectorAll(`.sideBar div[class$='Radio']`));
 
-export const upDownController = ()=>{
-    PeopleRadio.forEach(el=>{
+// Functions
+
+const upDownSetter = (upDownControllerList)=>{
+    upDownControllerList.radios.forEach(el=>{
     const checked = el.children[1].checked?el.children[1]:el.children[2];
     if (checked.value === '1'){
         if(el.children[0].textContent === 'Boat'){
@@ -34,8 +41,13 @@ export const upDownController = ()=>{
     }
 })
 }
-export const setDefault = ()=>{
-    PeopleRadio.forEach(el=>{
+const upDownController = ()=>{
+    upDownSetter(upDownControllerList)
+}
+const setDefault = ()=>{
+    upDownControllerList.radios.forEach(el=>{
         el.children[1].checked = true
     })
 }
+
+export {upDownController,setDefault}
